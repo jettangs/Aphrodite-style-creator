@@ -7,21 +7,32 @@ Standalone breakpoint definition can be used to convert into the styles Aphrodit
 ## install
 `npm install Aphrodite-style-creator`
 
+## Notice
+- The media name in your styles and breakpoints definition should be the same.
+
+- The alias param's value is a abbreviation for writing the media name convinent, so that I can write this way: `css(mob.box)` not `css(mobile.box)`.
+
+- Ensure using param 'media' and 'alias' both in your breakpoints if you are using alias.
+
 ## Usage 
-1. Defined your breakpoint
-```
+
+
+#### 1.Defined your breakpoint
+
+```javascript
 //breakpoints.js
 export default {
 
-    mobile : '@media (max-width: 600px)',
+    mobile : {media:'@media (max-width: 600px)', alias:'mob'},
     
-    desktop : {media:'@media (min-width: 601px) and (max-width: 1200px)', alias:'des'},
+    desktop : '@media (min-width: 601px) and (max-width: 1200px)'
     
 }
 ```
 
-2. Design your styles
-```
+#### 2.Design your styles
+
+```javascript
 //styles.js
 export default {
   mobile: {
@@ -37,8 +48,8 @@ export default {
 }
 ```
 
-3. Import in
-```
+#### 3.Import in
+```javascript
 //App.js
 import React, { Component } from 'react'
 import {creatStyle, css} from 'aphrodite-style-creator'
@@ -49,13 +60,33 @@ class App extends Component{
 
   render() {
  
-    let {mobile,desktop} = creatStyle(styles, breakpoints)
+    let {mob,desktop} = creatStyle(styles, breakpoints)
 
     return (
-      <div className={css(mobile.box,desktop.box)}>
+      <div className={css(mob.box,desktop.box)}>
           I am a box
       </div>
     )
   }
 }
+```
+
+## API
+```javascript
+/**
+ * @description 
+ * The convert function.
+ * @param @required {object} the style definition
+ * @param @required {object} the breakpoint definition
+ * @return {object} the converted styles, the param is alias in breakpoints if you using it.
+ */
+ creatStyle(styles, breakpoints)
+ 
+ /**
+ * @description 
+ * The css function, it's aphrodite origin function actually.
+ * @param @required {object} the same as aphrodite 
+ * @return {object} the converted styles by aphrodite
+ */
+ css(...)
 ```
