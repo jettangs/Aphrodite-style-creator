@@ -5,7 +5,7 @@ A tool for writing style and media query more efficiently with Aphrodite
 Standalone breakpoint definition can be used to convert into the styles Aphrodite need.
 
 ## install
-npm install Aphrodite-style-creator
+`npm install Aphrodite-style-creator`
 
 ## Usage 
 1. Defined your breakpoint
