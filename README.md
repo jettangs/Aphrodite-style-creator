@@ -12,7 +12,7 @@ Standalone breakpoint definition can be used to convert into the styles Aphrodit
 
 - The alias param's value is a abbreviation for writing the media name convinent, it use as param name in `creatStyle` function's return. So that I can write this way :  `css(mob.box)`  not  `css(mobile.box)`.
 
-- Ensure writing param 'media' and 'alias' both in your breakpoints if you are using alias.
+- Ensure writing param 'media' and 'alias' both in your breakpoints if you use alias.
 
 ## Usage 
 
