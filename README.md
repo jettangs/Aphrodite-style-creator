@@ -1,18 +1,18 @@
-# Aphrodite-style-creator
+# Aphrodite-breakpoint
 A tool for writing style and media query more efficiently with Aphrodite
 
 ## Feature
 Standalone breakpoint definition can be used to convert into the styles Aphrodite need.
 
 ## install
-`npm install Aphrodite-style-creator`
+`npm install aphrodite-breakpoint`
 
 ## Notice
 - The def param in your style is required.
 
 - The media name in your styles and breakpoints definition should be the same.
 
-- The alias param's value is a abbreviation for writing the media name convinent, it use as param name in `creatStyle` function's return. So that I can write this way :  `css(mob.box)`  not  `css(mobile.box)`.
+- The alias param's value is a abbreviation for writing the media name convinent, it use as param name in `creatStyle` function's return. So that I can write this way :  `css(dt.box)`  not  `css(desktop.box)`.
 
 - Ensure writing param 'media' and 'alias' both in your breakpoints if you use alias.
 
@@ -25,9 +25,9 @@ Standalone breakpoint definition can be used to convert into the styles Aphrodit
 //breakpoints.js
 export default {
     
-    mobile : {media:'@media (max-width: 600px)', alias:'mob'},
+    mobile : '@media (max-width: 600px)',
     
-    desktop : '@media (min-width: 601px) and (max-width: 1200px)'
+    desktop : {media:'@media (min-width: 601px) and (max-width: 1200px)', alias:'dt'}
     
 }
 ```
@@ -59,7 +59,7 @@ export default {
 ```javascript
 //App.js
 import React, { Component } from 'react'
-import {creatStyle, css} from 'aphrodite-style-creator'
+import {creatStyle, css} from 'aphrodite-breakpoint'
 import breakpoints from './breakpoints'
 import styles from './styles'
 
@@ -67,10 +67,10 @@ class App extends Component{
 
   render() {
  
-    let {def,mob,desktop} = creatStyle(styles, breakpoints)
+    let {def,mobile,dt} = creatStyle(styles, breakpoints)
 
     return (
-      <div className={css(def.box,mob.box,desktop.box)}>
+      <div className={css(def.box,mobile.box,dt.box)}>
           I am a box
       </div>
     )
