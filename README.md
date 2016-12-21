@@ -17,7 +17,7 @@ Standalone breakpoint definition can be used to convert into the styles Aphrodit
 ## Usage 
 
 
-#### 1.Defined your breakpoint
+#### 1. Defined your breakpoint
 
 ```javascript
 //breakpoints.js
@@ -30,7 +30,7 @@ export default {
 }
 ```
 
-#### 2.Design your styles
+#### 2. Design your styles
 
 ```javascript
 //styles.js
@@ -48,7 +48,7 @@ export default {
 }
 ```
 
-#### 3.Import in
+#### 3. Import in
 ```javascript
 //App.js
 import React, { Component } from 'react'
