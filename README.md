@@ -2,7 +2,7 @@
 A tool for writing style and media query more efficiently with Aphrodite
 
 ## Feature
-- Standalone breakpoint definition can be used to convert into the styles Aphrodite need.
+Standalone breakpoint definition can be used to convert into the styles Aphrodite need.
 
 ## install
 npm install Aphrodite-style-creator
