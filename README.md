@@ -8,6 +8,8 @@ Standalone breakpoint definition can be used to convert into the styles Aphrodit
 `npm install Aphrodite-style-creator`
 
 ## Notice
+- The def param in your style is required.
+
 - The media name in your styles and breakpoints definition should be the same.
 
 - The alias param's value is a abbreviation for writing the media name convinent, it use as param name in `creatStyle` function's return. So that I can write this way :  `css(mob.box)`  not  `css(mobile.box)`.
@@ -22,7 +24,7 @@ Standalone breakpoint definition can be used to convert into the styles Aphrodit
 ```javascript
 //breakpoints.js
 export default {
-
+    
     mobile : {media:'@media (max-width: 600px)', alias:'mob'},
     
     desktop : '@media (min-width: 601px) and (max-width: 1200px)'
@@ -35,6 +37,11 @@ export default {
 ```javascript
 //styles.js
 export default {
+  def: {
+      box: {
+          color: 'grey',
+      }
+  },
   mobile: {
       box: {
           color: 'red',
@@ -60,10 +67,10 @@ class App extends Component{
 
   render() {
  
-    let {mob,desktop} = creatStyle(styles, breakpoints)
+    let {def,mob,desktop} = creatStyle(styles, breakpoints)
 
     return (
-      <div className={css(mob.box,desktop.box)}>
+      <div className={css(def.box,mob.box,desktop.box)}>
           I am a box
       </div>
     )
