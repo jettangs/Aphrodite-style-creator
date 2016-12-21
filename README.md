@@ -10,7 +10,7 @@ Standalone breakpoint definition can be used to convert into the styles Aphrodit
 ## Notice
 - The media name in your styles and breakpoints definition should be the same.
 
-- The alias param's value is a abbreviation for writing the media name convinent, so that I can write this way: `css(mob.box)` not `css(mobile.box)`.
+- The alias param's value is a abbreviation for writing the media name convinent, it use as param name in `creatStyle` function's return. So that I can write this way: `css(mob.box)` not `css(mobile.box)`.
 
 - Ensure using param 'media' and 'alias' both in your breakpoints if you are using alias.
 
@@ -44,7 +44,7 @@ export default {
       box: {
           color: 'blue',
       }
-  },
+  }
 }
 ```
 
@@ -78,7 +78,7 @@ class App extends Component{
  * The convert function.
  * @param @required {object} the style definition
  * @param @required {object} the breakpoint definition
- * @return {object} the converted styles, the param is alias in breakpoints if you using it.
+ * @return {object} the converted styles, the param is alias in breakpoints if you use it.
  */
  creatStyle(styles, breakpoints)
  
