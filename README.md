@@ -2,7 +2,7 @@
 A tool for writing style and media query more efficiently with Aphrodite
 
 ## Feature
-- Substate: support the substate selector: 
+- Substate: support the substate nested in style: 
 ```
 item: {
     color: 'blue',
@@ -20,13 +20,13 @@ item: {
 ## Notice
 - The name you defined for substate should not start with `:`, because it was used in pseudo-selector
 
-- The def param in your style is required.
+- The `def` param in your style is required.
 
 - The media name in your styles and breakpoints definition should be the same.
 
 - The alias param's value is a abbreviation for writing the media name convinent, it use as param name in `creatStyle` function's return. So that I can write this way :  `css(dt.box)`  not  `css(desktop.box)`.
 
-- Ensure writing param 'media' and 'alias' both in your breakpoints if you use alias.
+- Ensure writing param `media` and `alias` both in your breakpoints if you use alias.
 
 ## Usage 
 
@@ -121,3 +121,10 @@ App.defaultProps = {
  */
  css(...)
 ```
+
+## Changelog
+### 0.0.2
+Support the substate nested in style
+
+### 0.0.1
+First version, support add media query prefix.
