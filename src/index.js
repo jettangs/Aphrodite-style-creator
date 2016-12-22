@@ -26,7 +26,6 @@ export const creatStyle = (styles, breakpoints) => {
             let breakpoint = breakpoints[p]
             if(i == p) {
                 if(breakpoint.media && breakpoint.alias) {
-                   
                     obj[breakpoint.alias] =  StyleSheet.create(setMediaPrefix(style,breakpoint.media))
                 }else if(typeof breakpoint == "string"){
                     obj[i] =  StyleSheet.create(setMediaPrefix(style,breakpoint))
@@ -36,9 +35,11 @@ export const creatStyle = (styles, breakpoints) => {
             }
         }
     }
+
     if(!obj['def']) {
         console.error("the default style not found. --Aphrodite-breakpoint")
         return null
     }
+
     return obj
 }

@@ -1,5 +1,5 @@
 {
-  "name": "aphrodite-breakpoint",
+  "name": "aphrodite-freestyle",
   "version": "0.0.1",
   "description": "A tool for writing style and media query more efficiently with Aphrodite",
   "main": "lib/index.js",
