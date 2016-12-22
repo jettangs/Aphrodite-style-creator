@@ -124,7 +124,8 @@ App.defaultProps = {
 
 ## Changelog
 ### 0.0.2
-Support the substate nested in style
+- Support the substate nested in style
+- change name `aphrodite-breakpoint` to `aphrodite-freestyle`
 
 ### 0.0.1
 First version, support add media query prefix.
