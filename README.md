@@ -1,4 +1,4 @@
-# Aphrodite-breakpoint
+# Aphrodite-freestyle
 A tool for writing style and media query more efficiently with Aphrodite
 
 ## Feature
