@@ -1,31 +1,41 @@
-export { css } from 'aphrodite/no-important'
 
 import _ from 'lodash'
 import { StyleSheet } from 'aphrodite/no-important'
 
+const globalSelectorHandler = (selector, baseSelector, generateSubtreeStyles) => {
+    if (selector[0] !== "*") {
+        return null;
+    }
+    return generateSubtreeStyles(`${baseSelector} ${selector.slice(1)} `);
+};
+
+const globalExtension = {selectorHandler: globalSelectorHandler};
+
+const {StyleSheet: newStyle, css: newCss} = StyleSheet.extend([globalExtension])
+
+export let css = newCss
+
 const processStyle = styleSheet => {
     let styles = _.cloneDeep(styleSheet)
-    let style = StyleSheet.create(styles)
+    let style = newStyle.create(styles)
     for(let s in style) {
         let _defs = style[s]['_definition']
         for(let i in _defs) {
             if(typeof _defs[i] == 'object' && i.indexOf('@') == 0) {
                 let _def = _defs[i]
                 for(var k in _def) {
-                    if(typeof _def[k] == 'object' && k.indexOf(':') < 0) {
-                        let obj = {} //[_def[i]]
+                    if(typeof _def[k] == 'object' && k.indexOf(':') < 0 && i.indexOf('*') < 0) {
+                        let obj = {} 
                         obj[s+k] = {}
                         obj[s+k][i] = _def[k]
-                        obj = StyleSheet.create(obj)
-                        style[s][k] = {}
+                        obj = newStyle.create(obj)
                         style[s][k] = obj[s+k]
                     }
                 }
-            }else if(typeof _defs[i] == 'object' && i.indexOf(':') < 0) {
+            }else if(typeof _defs[i] == 'object' && i.indexOf(':') < 0 && i.indexOf('*') < 0) {
                 let obj = {}
                 obj[s+i] = _defs[i]
-                delete _defs[i]
-                obj = StyleSheet.create(obj)
+                obj = newStyle.create(obj)
                 style[s][i] = obj[s+i]
             }
         }
