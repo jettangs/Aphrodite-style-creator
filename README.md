@@ -112,15 +112,15 @@ App.defaultProps = {
 /**
  * @description 
  * The convert function.
- * @param @required {object} the style definition
- * @param @required {object} the breakpoint definition
+ * @param @required {object} styles: the style definition
+ * @param @required {object} breakpoints: the breakpoint definition
  * @return {object} the converted styles, the param is alias in breakpoints if you use it.
  */
  creatStyle(styles, breakpoints)
  
  /**
  * @description 
- * The css function, it's aphrodite origin function actually.
+ * Aphrodite origin function, but with some extensions.
  * @param @required {object} the same as aphrodite 
  * @return {object} the converted styles by aphrodite
  */
