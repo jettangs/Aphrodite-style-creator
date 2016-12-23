@@ -2,50 +2,38 @@ export { css } from 'aphrodite/no-important'
 
 import _ from 'lodash'
 import { StyleSheet } from 'aphrodite/no-important'
-let t = 0
+
 const processStyle = styleSheet => {
-    t++
-    
     let styles = _.cloneDeep(styleSheet)
-    
-    // style = {body: 'object', box: 'object'}
     let style = StyleSheet.create(styles)
     for(let s in style) {
-        //style[s] = {float:"left" height:"60px" lineHeight:"60px" textAlign:"center" width:"120px"}
-        let _def = style[s]['_definition']
-        for(let i in _def) {
-            
-            if(typeof _def[i] == 'object' && i.indexOf('@') == 0) {
-                
-                _def = _def[i]
-                
+        let _defs = style[s]['_definition']
+        for(let i in _defs) {
+            if(typeof _defs[i] == 'object' && i.indexOf('@') == 0) {
+                let _def = _defs[i]
                 for(var k in _def) {
                     if(typeof _def[k] == 'object' && k.indexOf(':') < 0) {
                         let obj = {} //[_def[i]]
                         obj[s+k] = {}
-                        t==2 && console.log(i)
                         obj[s+k][i] = _def[k]
-                        delete _def[k]
                         obj = StyleSheet.create(obj)
+                        style[s][k] = {}
                         style[s][k] = obj[s+k]
                     }
                 }
-            }else if(typeof _def[i] == 'object' && i.indexOf(':') < 0) {
-                k==2 && console.log(_def)
+            }else if(typeof _defs[i] == 'object' && i.indexOf(':') < 0) {
                 let obj = {}
-                obj[s+i] = _def[i]
-                delete _def[i]
+                obj[s+i] = _defs[i]
+                delete _defs[i]
                 obj = StyleSheet.create(obj)
                 style[s][i] = obj[s+i]
             }
         }
     }
-    //console.log(style)
     return style
 }
 
 const setMediaPrefix = (style, media) => {
-    //style: {body: Object}
     for(let s in style) {
         let obj = {}
         obj[media] = style[s]
@@ -54,7 +42,8 @@ const setMediaPrefix = (style, media) => {
     return style
 }
 
-export const creatStyle = (styles, breakpoints) => {
+export const creatStyle = (stylesheets, breakpoints) => {
+    let styles = _.cloneDeep(stylesheets)
     let obj = {}
     for(let i in styles) {
         if(i == 'def') {
