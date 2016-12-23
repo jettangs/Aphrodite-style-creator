@@ -14,6 +14,8 @@ item: {
 
 - Standalone breakpoint definition: it can be used to convert into the styles Aphrodite need.
 
+- Build-in global selector extension for supporting global style.
+
 ## Install
 `npm install aphrodite-freestyle`
 
@@ -68,6 +70,9 @@ export default {
   desktop : {
       box: {
           width: '800px',
+          '*a': {
+               color: 'orange'
+          }
       }
   }
 }
@@ -89,9 +94,9 @@ class App extends Component{
     
     return (
       <div className={css(def.box,mobile.box,dt.box)}>
-          {['home','product','contact'].map(
-              item => <div className={css(def.item, this.props.activeItem == item && def.item.selected)}>
-          )}
+        <div className={css(def.item, this.props.activeItem == 'home' && def.item.selected)}>
+            <a href="#">Home</a>
+        </div>
       </div>
     )
   }
@@ -123,6 +128,9 @@ App.defaultProps = {
 ```
 
 ## Changelog
+### 0.0.3
+- Created a global selector extension to support global style
+
 ### 0.0.2
 - Support the substate nested in style
 - change name `aphrodite-breakpoint` to `aphrodite-freestyle`
