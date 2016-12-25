@@ -15,6 +15,24 @@ const {StyleSheet: newStyle, css: newCss} = StyleSheet.extend([globalExtension])
 
 export let css = newCss
 
+const generateStyle = (_def, key, out, media) => {  
+    for(let i in _def) {
+        if(typeof _def[i] == 'object' && i.indexOf(':') < 0 && i.indexOf('*') < 0) {
+            generateStyle(_def[i], i, out[key], media)
+        } else {    
+            let obj = {}
+            obj[key] = {}
+            if(media) {
+                obj[key][media] = _def
+            }else{
+                obj[key] = _def
+            }
+            obj = newStyle.create(obj)
+            out[key] = obj[key]
+        }
+    }    
+}
+
 const processStyle = styleSheet => {
     let styles = _.cloneDeep(styleSheet)
     let style = newStyle.create(styles)
@@ -25,18 +43,17 @@ const processStyle = styleSheet => {
                 let _def = _defs[i]
                 for(var k in _def) {
                     if(typeof _def[k] == 'object' && k.indexOf(':') < 0 && i.indexOf('*') < 0) {
-                        let obj = {} 
-                        obj[s+k] = {}
-                        obj[s+k][i] = _def[k]
-                        obj = newStyle.create(obj)
-                        style[s][k] = obj[s+k]
+                        let c = {}
+                        generateStyle(_def[k],k,c,i)
+                        style[s][k] = c[k]
+                        delete style[s]['_definition'][i][k]
                     }
                 }
             }else if(typeof _defs[i] == 'object' && i.indexOf(':') < 0 && i.indexOf('*') < 0) {
-                let obj = {}
-                obj[s+i] = _defs[i]
-                obj = newStyle.create(obj)
-                style[s][i] = obj[s+i]
+                let c = {} 
+                generateStyle(_defs[i],i,c)
+                style[s][i] = c[i]
+                delete style[s]['_definition'][i]
             }
         }
     }
@@ -56,12 +73,12 @@ export const creatStyle = (stylesheets, breakpoints) => {
     let styles = _.cloneDeep(stylesheets)
     let obj = {}
     for(let i in styles) {
-        if(i == 'def') {
+        if(i == 'base') {
             obj[i] = processStyle(styles[i])
         }
         let style = styles[i]
         for(let p in breakpoints) {
-            if(p == 'def') {
+            if(p == 'base') {
                console.error("The def param could not be use in breakpoints.--Aphrodite-style-creator")
             }
             let breakpoint = breakpoints[p]
@@ -76,8 +93,8 @@ export const creatStyle = (stylesheets, breakpoints) => {
             }
         }
     }
-    if(!obj['def']) {
-        console.error("the default style not found. --Aphrodite-style-creator")
+    if(!obj['base']) {
+        console.error("the base style not found. --Aphrodite-style-creator")
         return null
     }
     return obj
