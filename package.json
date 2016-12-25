@@ -1,6 +1,6 @@
 {
   "name": "aphrodite-freestyle",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A tool for writing style and media query more efficiently with Aphrodite",
   "main": "lib/index.js",
   "license": "BSD-2-Clause",
@@ -9,6 +9,9 @@
     "url": "https://github.com/jettangs/aphrodite-freestyle.git"
   },
   "author": "Jettang",
+  "keywords": [
+    "aphrodite","css","react","inline-styles"
+  ],
   "bugs": {
     "url": "https://github.com/jettangs/aphrodite-freestyle/issues"
   },

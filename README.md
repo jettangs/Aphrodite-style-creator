@@ -2,13 +2,17 @@
 A tool for writing style and media query more efficiently with Aphrodite
 
 ## Feature
-- Substate: support the substate nested in style: 
+- Inclue all Aphrodite's feature.
+
+- Support nested style: 
 ```
-item: {
+menu: {
     color: 'blue',
-    selected: {
-        color: 'red'
-    }
+    item: {
+        selected: {
+           color: 'red'
+       }
+    }
 }
 ```
 
@@ -22,13 +26,9 @@ item: {
 ## Notice
 - The name you defined for substate should not start with `:`, because it was used in pseudo-selector
 
-- The `def` param in your style is required.
+- The `base` style name in your style is required.
 
 - The media name in your styles and breakpoints definition should be the same.
-
-- The alias param's value is a abbreviation for writing the media name convinent, it use as param name in `creatStyle` function's return. So that I can write this way :  `css(dt.box)`  not  `css(desktop.box)`.
-
-- Ensure writing param `media` and `alias` both in your breakpoints if you use alias.
 
 ## Usage 
 
@@ -37,11 +37,8 @@ item: {
 ```javascript
 //breakpoints.js
 export default {
-    
     mobile : '@media (max-width: 600px)',
-    
-    desktop : {media:'@media (min-width: 601px) and (max-width: 1200px)', alias:'dt'}
-    
+    desktop : '@media (min-width: 601px) and (max-width: 1200px)'
 }
 ```
 
@@ -49,52 +46,51 @@ export default {
 
 ```javascript
 //styles.js
-export default {
-  def: {
-      item: {
+import {creatStyle} from 'aphrodite-freestyle'
+import breakpoints from './breakpoints'
+
+let style = {
+  base: {
+      menu: {
         color: 'green',
-        selected: {
-           color: 'yellow'
+        '*a': {
+            color: 'orange'
+        },
+        item: {
+            selected: {
+                color: 'yellow'
+            }
         }
-      },
-      box: {
-          //this won't be work because of the breakpoint definition
-          width: '600px'
-      }
+      }
   },
   mobile: {
-      box: {
+      menu: {
           width: '400px',
       }
   },
   desktop : {
-      box: {
-          width: '800px',
-          '*a': {
-               color: 'orange'
-          }
+      menu: {
+          width: '800px'
       }
   }
 }
+
+export default creatStyle(styles, breakpoints)
 ```
 
 #### 3. Import in
 ```javascript
 //App.js
 import React, { Component } from 'react'
-import {creatStyle, css} from 'aphrodite-freestyle'
-import breakpoints from './breakpoints'
+import {css} from 'aphrodite-freestyle'
 import styles from './styles'
 
 class App extends Component{
    
   render() {
-  
-    let {def,mobile,dt} = creatStyle(styles, breakpoints)
-    
     return (
-      <div className={css(def.box,mobile.box,dt.box)}>
-        <div className={css(def.item, this.props.activeItem == 'home' && def.item.selected)}>
+      <div className={css(style.box)}>
+        <div className={css(style.item, this.props.activeItem == 'home' && def.item.selected)}>
             <a href="#">Home</a>
         </div>
       </div>
@@ -128,6 +124,9 @@ App.defaultProps = {
 ```
 
 ## Changelog
+### 0.0.4
+- Pithily writting: Remove the alia, support nested style, add key `_style` in it.
+
 ### 0.0.3
 - Created a global selector extension to support global style
 

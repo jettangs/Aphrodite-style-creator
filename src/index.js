@@ -1,4 +1,3 @@
-
 import _ from 'lodash'
 import { StyleSheet } from 'aphrodite/no-important'
 
@@ -13,12 +12,16 @@ const globalExtension = {selectorHandler: globalSelectorHandler};
 
 const {StyleSheet: newStyle, css: newCss} = StyleSheet.extend([globalExtension])
 
-export let css = newCss
+export const css = (...styleList) => {
+    let style = styleList.map(item => item['_style'])
+   return newCss(style)
+}
 
 const generateStyle = (_def, key, out, media) => {  
     for(let i in _def) {
         if(typeof _def[i] == 'object' && i.indexOf(':') < 0 && i.indexOf('*') < 0) {
             generateStyle(_def[i], i, out[key], media)
+            delete _def[i]
         } else {    
             let obj = {}
             obj[key] = {}
@@ -69,7 +72,26 @@ const setMediaPrefix = (style, media) => {
     return style
 }
 
-export const creatStyle = (stylesheets, breakpoints) => {
+const recombine = (dic,sty,key) => {
+    for(let p in sty) {
+        if(!dic[key]) {
+            dic[key]={}
+        }
+        if(p != '_definition' && p != '_name') {
+            recombine(dic[key], sty[p], p)
+        }else if(p == '_definition'){
+            if(!dic[key]['_style']) {
+                dic[key]['_style'] = []
+            }
+            let t = {}
+            t['_definition'] = sty['_definition']
+            t['_name'] = sty['_name']
+            dic[key]['_style'].push(t)
+        } 
+    }
+}
+
+export const creatStyle = (stylesheets, breakpoints, p) => {
     let styles = _.cloneDeep(stylesheets)
     let obj = {}
     for(let i in styles) {
@@ -93,9 +115,18 @@ export const creatStyle = (stylesheets, breakpoints) => {
             }
         }
     }
+
     if(!obj['base']) {
         console.error("the base style not found. --Aphrodite-style-creator")
-        return null
+        obj = null
     }
-    return obj
+
+    let dic = {}
+    for(let i in obj) {
+        for(let p in obj[i]) {
+            recombine(dic,obj[i][p],p)
+        }
+    }
+
+    return dic
 }
