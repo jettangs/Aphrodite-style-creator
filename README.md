@@ -89,8 +89,8 @@ class App extends Component{
    
   render() {
     return (
-      <div className={css(style.box)}>
-        <div className={css(style.item, this.props.activeItem == 'home' && def.item.selected)}>
+      <div className={css(style.menu)}>
+        <div className={css(style.item, this.props.activeItem == 'home' && style.item.selected)}>
             <a href="#">Home</a>
         </div>
       </div>
@@ -102,6 +102,7 @@ App.defaultProps = {
    activeItem: 'home'
 }
 ```
+The examples folder include a navigator boilerplate.
 
 ## API
 ```javascript
