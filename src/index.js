@@ -91,7 +91,7 @@ const recombine = (dic,sty,key) => {
     }
 }
 
-export const creatStyle = (stylesheets, breakpoints, p) => {
+export const creatStyle = (stylesheets, breakpoints) => {
     let styles = _.cloneDeep(stylesheets)
     let obj = {}
     for(let i in styles) {

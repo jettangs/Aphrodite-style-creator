@@ -2,7 +2,7 @@
 A tool for writing style and media query more efficiently with Aphrodite
 
 ## Feature
-- Inclue all Aphrodite's feature.
+- Inclue all [Aphrodite](https://github.com/Khan/aphrodite)'s feature.
 
 - Support nested style: 
 ```javascript
@@ -110,7 +110,7 @@ The examples folder include a navigator boilerplate.
  * @description 
  * The convert function.
  * @param @required {object} styles: the style definition
- * @param @required {object} breakpoints: the breakpoint definition
+ * @param {object} breakpoints: the breakpoint definition
  * @return {object} the converted styles, the param is alias in breakpoints if you use it.
  */
  creatStyle(styles, breakpoints)
