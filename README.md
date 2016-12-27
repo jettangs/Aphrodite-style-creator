@@ -89,9 +89,9 @@ class App extends Component{
    
   render() {
     return (
-      <div className={css(style.menu)}>
-        <div className={css(style.item, this.props.activeItem == 'home' && style.item.selected)}>
-            <a href="#">Home</a>
+      <div className={css(styles.menu)}>
+        <div className={css(styles.item, this.props.activeItem == 'home' && styles.item.selected)}>
+            <a href="#">Link</a>
         </div>
       </div>
     )
