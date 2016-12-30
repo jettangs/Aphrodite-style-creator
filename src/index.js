@@ -13,7 +13,10 @@ const globalExtension = {selectorHandler: globalSelectorHandler};
 const {StyleSheet: newStyle, css: newCss} = StyleSheet.extend([globalExtension])
 
 export const css = (...styleList) => {
-    let style = styleList.map(item => item['_style'])
+    let style = styleList.map(
+        item => {
+            if(item) return item['_style']
+    })
    return newCss(style)
 }
 
@@ -98,19 +101,21 @@ export const creatStyle = (stylesheets, breakpoints) => {
         if(i == 'base') {
             obj[i] = processStyle(styles[i])
         }
-        let style = styles[i]
-        for(let p in breakpoints) {
-            if(p == 'base') {
-               console.error("The def param could not be use in breakpoints.--Aphrodite-style-creator")
-            }
-            let breakpoint = breakpoints[p]
-            if(i == p) {
-                if(breakpoint.media && breakpoint.alias) {
-                    obj[breakpoint.alias] =  processStyle(setMediaPrefix(style,breakpoint.media))
-                }else if(typeof breakpoint == "string"){
-                    obj[i] =  processStyle(setMediaPrefix(style,breakpoint))
-                }else {
-                    console.error("please using param 'media' and 'alias' both in media [" + p + "]. --Aphrodite-style-creator")
+        if(breakpoints) {
+            let style = styles[i]
+            for(let p in breakpoints) {
+                if(p == 'base') {
+                console.error("The base param could not be use in breakpoints.--Aphrodite-style-creator")
+                }
+                let breakpoint = breakpoints[p]
+                if(i == p) {
+                    if(breakpoint.media && breakpoint.alias) {
+                        obj[breakpoint.alias] =  processStyle(setMediaPrefix(style,breakpoint.media))
+                    }else if(typeof breakpoint == "string"){
+                        obj[i] =  processStyle(setMediaPrefix(style,breakpoint))
+                    }else {
+                        console.error("please using param 'media' and 'alias' both in media [" + p + "]. --Aphrodite-style-creator")
+                    }
                 }
             }
         }
